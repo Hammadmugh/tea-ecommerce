@@ -23,10 +23,7 @@ const MONGODB_URI = process.env.CONNECTION_STRING || "mongodb://localhost:27017/
 // ============ MIDDLEWARE ============
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ limit: '10kb', extended: true }));
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5000', 'http://localhost:3001'],
-  credentials: true
-}));
+app.use(cors());
 
 // ============ DATABASE CONNECTION ============
 mongoose
