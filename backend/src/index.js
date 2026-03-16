@@ -1,0 +1,103 @@
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import { errorHandler } from "./middlewares/errorHandler.js";
+import { seedAdmin } from "./config/seedAdmin.js";
+import { seedProducts } from "./config/seedProducts.js";
+
+// Import routes
+import authRoutes from "./routes/authRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+
+// Load environment variables
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+const MONGODB_URI = process.env.CONNECTION_STRING || "mongodb://localhost:27017/ecommerce-tea";
+
+// ============ MIDDLEWARE ============
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ limit: '10kb', extended: true }));
+app.use(cors({
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5000', 'http://localhost:3001'],
+  credentials: true
+}));
+
+// ============ DATABASE CONNECTION ============
+mongoose
+  .connect(MONGODB_URI)
+  .then(async () => {
+    console.log("✅ MongoDB connected successfully");
+    // Seed default admin user
+    await seedAdmin();
+    // Seed products
+    await seedProducts();
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err.message);
+    process.exit(1);
+  });
+
+// ============ ROUTES ============
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/admin", adminRoutes);
+
+// ============ HEALTH CHECK ============
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Server is running",
+    timestamp: new Date().toISOString()
+  });
+});
+
+// ============ DEBUG ENDPOINT ============
+app.get("/api/debug/admin-user", async (req, res) => {
+  try {
+    const User = require("./models/userModel.js").default;
+    const adminUser = await User.findOne({ role: "superadmin" });
+    res.status(200).json({
+      success: true,
+      message: "Admin user check",
+      adminExists: !!adminUser,
+      adminData: adminUser ? {
+        id: adminUser._id,
+        name: adminUser.name,
+        email: adminUser.email,
+        role: adminUser.role,
+        isBlocked: adminUser.isBlocked
+      } : null
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// ============ 404 HANDLER ============
+app.use( (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+    path: req.originalUrl
+  });
+});
+
+// ============ ERROR HANDLER ============
+app.use(errorHandler);
+
+// ============ START SERVER ============
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📝 API Base URL: http://localhost:${PORT}/api`);
+});

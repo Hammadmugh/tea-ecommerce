@@ -1,0 +1,291 @@
+export const productsData = [
+  {
+    id: 1,
+    name: 'Ceylon Ginger Cinnamon chai tea',
+    slug: 'ceylon-ginger-cinnamon-chai-tea',
+    description: 'A lovely warming Chai tea with ginger cinnamon flavours.',
+    price: '€3.90',
+    origin: 'Iran',
+    organic: true,
+    vegan: true,
+    image: '/tea collection (1).png',
+    collection: 'chai',
+    steeping: {
+      servingSize: '2 tsp per cup, 6 tsp per pot',
+      temperature: '100°C',
+      time: '3 - 5 minutes',
+      colorAfter3Min: '#BC575F'
+    },
+    flavor: 'Spicy',
+    qualities: 'Smoothing',
+    caffeine: 'Medium',
+    allergens: 'Nuts-free',
+    ingredients: 'Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks, Cardamom, Cinnamon pieces.',
+    variants: [
+      { image: '/packaging (1).png', label: '50 g bag', value: '50' },
+      { image: '/packaging (2).png', label: '100 g bag', value: '100' },
+      { image: '/packaging (3).png', label: '170 g bag', value: '170' },
+      { image: '/packaging (4).png', label: '250 g bag', value: '250' },
+      { image: '/packaging (5).png', label: '1 kg g bag', value: '1kg' },
+      { image: '/packaging (6).png', label: 'Sampler', value: 'sampler' },
+    ]
+  },
+  {
+    id: 2,
+    name: 'Ceylon Ginger Cinnamon chai tea',
+    slug: 'ceylon-ginger-cinnamon-chai-tea-2',
+    description: 'A lovely warming Chai tea with ginger cinnamon flavours.',
+    price: '€4.85 / 50 g',
+    origin: 'India',
+    organic: true,
+    vegan: true,
+    image: '/tea collection (2).png',
+    collection: 'chai',
+    steeping: {
+      servingSize: '2 tsp per cup, 6 tsp per pot',
+      temperature: '100°C',
+      time: '3 - 5 minutes',
+      colorAfter3Min: '#BC575F'
+    },
+    flavor: 'Spicy',
+    qualities: 'Smoothing',
+    caffeine: 'Medium',
+    allergens: 'Nuts-free',
+    ingredients: 'Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks, Cardamom, Cinnamon pieces.',
+    variants: [
+      { image: '/packaging (1).png', label: '50 g bag', value: '50' },
+      { image: '/packaging (2).png', label: '100 g bag', value: '100' },
+      { image: '/packaging (3).png', label: '170 g bag', value: '170' },
+      { image: '/packaging (4).png', label: '250 g bag', value: '250' },
+      { image: '/packaging (5).png', label: '1 kg g bag', value: '1kg' },
+      { image: '/packaging (6).png', label: 'Sampler', value: 'sampler' },
+    ]
+  },
+  {
+    id: 3,
+    name: 'Ceylon Ginger Cinnamon chai tea',
+    slug: 'ceylon-ginger-cinnamon-chai-tea-3',
+    description: 'A lovely warming Chai tea with ginger cinnamon flavours.',
+    price: '€4.85 / 50 g',
+    origin: 'Japan',
+    organic: false,
+    vegan: true,
+    image: '/tea collection (3).png',
+    collection: 'chai',
+    steeping: {
+      servingSize: '2 tsp per cup, 6 tsp per pot',
+      temperature: '100°C',
+      time: '3 - 5 minutes',
+      colorAfter3Min: '#BC575F'
+    },
+    flavor: 'Spicy',
+    qualities: 'Smoothing',
+    caffeine: 'Medium',
+    allergens: 'Nuts-free',
+    ingredients: 'Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks, Cardamom, Cinnamon pieces.',
+    variants: [
+      { image: '/packaging (1).png', label: '50 g bag', value: '50' },
+      { image: '/packaging (2).png', label: '100 g bag', value: '100' },
+      { image: '/packaging (3).png', label: '170 g bag', value: '170' },
+      { image: '/packaging (4).png', label: '250 g bag', value: '250' },
+      { image: '/packaging (5).png', label: '1 kg g bag', value: '1kg' },
+      { image: '/packaging (6).png', label: 'Sampler', value: 'sampler' },
+    ]
+  },
+  {
+    id: 4,
+    name: 'Ceylon Ginger Cinnamon chai tea',
+    slug: 'ceylon-ginger-cinnamon-chai-tea-4',
+    description: 'A lovely warming Chai tea with ginger cinnamon flavours.',
+    price: '€4.85 / 50 g',
+    origin: 'South Africa',
+    organic: true,
+    vegan: true,
+    image: '/tea collection (4).png',
+    collection: 'chai',
+    steeping: {
+      servingSize: '2 tsp per cup, 6 tsp per pot',
+      temperature: '100°C',
+      time: '3 - 5 minutes',
+      colorAfter3Min: '#BC575F'
+    },
+    flavor: 'Spicy',
+    qualities: 'Smoothing',
+    caffeine: 'Medium',
+    allergens: 'Nuts-free',
+    ingredients: 'Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks, Cardamom, Cinnamon pieces.',
+    variants: [
+      { image: '/packaging (1).png', label: '50 g bag', value: '50' },
+      { image: '/packaging (2).png', label: '100 g bag', value: '100' },
+      { image: '/packaging (3).png', label: '170 g bag', value: '170' },
+      { image: '/packaging (4).png', label: '250 g bag', value: '250' },
+      { image: '/packaging (5).png', label: '1 kg g bag', value: '1kg' },
+      { image: '/packaging (6).png', label: 'Sampler', value: 'sampler' },
+    ]
+  },
+  {
+    id: 5,
+    name: 'Ceylon Ginger Cinnamon chai tea',
+    slug: 'ceylon-ginger-cinnamon-chai-tea-5',
+    description: 'A lovely warming Chai tea with ginger cinnamon flavours.',
+    price: '€4.85 / 50 g',
+    origin: 'Iran',
+    organic: false,
+    vegan: false,
+    image: '/tea collection (5).png',
+    collection: 'chai',
+    steeping: {
+      servingSize: '2 tsp per cup, 6 tsp per pot',
+      temperature: '100°C',
+      time: '3 - 5 minutes',
+      colorAfter3Min: '#BC575F'
+    },
+    flavor: 'Spicy',
+    qualities: 'Smoothing',
+    caffeine: 'Medium',
+    allergens: 'Nuts-free',
+    ingredients: 'Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks, Cardamom, Cinnamon pieces.',
+    variants: [
+      { image: '/packaging (1).png', label: '50 g bag', value: '50' },
+      { image: '/packaging (2).png', label: '100 g bag', value: '100' },
+      { image: '/packaging (3).png', label: '170 g bag', value: '170' },
+      { image: '/packaging (4).png', label: '250 g bag', value: '250' },
+      { image: '/packaging (5).png', label: '1 kg g bag', value: '1kg' },
+      { image: '/packaging (6).png', label: 'Sampler', value: 'sampler' },
+    ]
+  },
+  {
+    id: 6,
+    name: 'Ceylon Ginger Cinnamon chai tea',
+    slug: 'ceylon-ginger-cinnamon-chai-tea-6',
+    description: 'A lovely warming Chai tea with ginger cinnamon flavours.',
+    price: '€4.85 / 50 g',
+    origin: 'India',
+    organic: true,
+    vegan: true,
+    image: '/tea collection (6).png',
+    collection: 'chai',
+    steeping: {
+      servingSize: '2 tsp per cup, 6 tsp per pot',
+      temperature: '100°C',
+      time: '3 - 5 minutes',
+      colorAfter3Min: '#BC575F'
+    },
+    flavor: 'Spicy',
+    qualities: 'Smoothing',
+    caffeine: 'Medium',
+    allergens: 'Nuts-free',
+    ingredients: 'Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks, Cardamom, Cinnamon pieces.',
+    variants: [
+      { image: '/packaging (1).png', label: '50 g bag', value: '50' },
+      { image: '/packaging (2).png', label: '100 g bag', value: '100' },
+      { image: '/packaging (3).png', label: '170 g bag', value: '170' },
+      { image: '/packaging (4).png', label: '250 g bag', value: '250' },
+      { image: '/packaging (5).png', label: '1 kg g bag', value: '1kg' },
+      { image: '/packaging (6).png', label: 'Sampler', value: 'sampler' },
+    ]
+  },
+  {
+    id: 7,
+    name: 'Ceylon Ginger Cinnamon chai tea',
+    slug: 'ceylon-ginger-cinnamon-chai-tea-7',
+    description: 'A lovely warming Chai tea with ginger cinnamon flavours.',
+    price: '€4.85 / 50 g',
+    origin: 'Japan',
+    organic: true,
+    vegan: true,
+    image: '/tea collection (7).png',
+    collection: 'chai',
+    steeping: {
+      servingSize: '2 tsp per cup, 6 tsp per pot',
+      temperature: '100°C',
+      time: '3 - 5 minutes',
+      colorAfter3Min: '#BC575F'
+    },
+    flavor: 'Spicy',
+    qualities: 'Smoothing',
+    caffeine: 'Medium',
+    allergens: 'Nuts-free',
+    ingredients: 'Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks, Cardamom, Cinnamon pieces.',
+    variants: [
+      { image: '/packaging (1).png', label: '50 g bag', value: '50' },
+      { image: '/packaging (2).png', label: '100 g bag', value: '100' },
+      { image: '/packaging (3).png', label: '170 g bag', value: '170' },
+      { image: '/packaging (4).png', label: '250 g bag', value: '250' },
+      { image: '/packaging (5).png', label: '1 kg g bag', value: '1kg' },
+      { image: '/packaging (6).png', label: 'Sampler', value: 'sampler' },
+    ]
+  },
+  {
+    id: 8,
+    name: 'Ceylon Ginger Cinnamon chai tea',
+    slug: 'ceylon-ginger-cinnamon-chai-tea-8',
+    description: 'A lovely warming Chai tea with ginger cinnamon flavours.',
+    price: '€4.85 / 50 g',
+    origin: 'South Africa',
+    organic: false,
+    vegan: true,
+    image: '/tea collection (8).png',
+    collection: 'chai',
+    steeping: {
+      servingSize: '2 tsp per cup, 6 tsp per pot',
+      temperature: '100°C',
+      time: '3 - 5 minutes',
+      colorAfter3Min: '#BC575F'
+    },
+    flavor: 'Spicy',
+    qualities: 'Smoothing',
+    caffeine: 'Medium',
+    allergens: 'Nuts-free',
+    ingredients: 'Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks, Cardamom, Cinnamon pieces.',
+    variants: [
+      { image: '/packaging (1).png', label: '50 g bag', value: '50' },
+      { image: '/packaging (2).png', label: '100 g bag', value: '100' },
+      { image: '/packaging (3).png', label: '170 g bag', value: '170' },
+      { image: '/packaging (4).png', label: '250 g bag', value: '250' },
+      { image: '/packaging (5).png', label: '1 kg g bag', value: '1kg' },
+      { image: '/packaging (6).png', label: 'Sampler', value: 'sampler' },
+    ]
+  },
+  {
+    id: 9,
+    name: 'Ceylon Ginger Cinnamon chai tea',
+    slug: 'ceylon-ginger-cinnamon-chai-tea-9',
+    description: 'A lovely warming Chai tea with ginger cinnamon flavours.',
+    price: '€4.85 / 50 g',
+    origin: 'Iran',
+    organic: true,
+    vegan: true,
+    image: '/tea collection (9).png',
+    collection: 'chai',
+    steeping: {
+      servingSize: '2 tsp per cup, 6 tsp per pot',
+      temperature: '100°C',
+      time: '3 - 5 minutes',
+      colorAfter3Min: '#BC575F'
+    },
+    flavor: 'Spicy',
+    qualities: 'Smoothing',
+    caffeine: 'Medium',
+    allergens: 'Nuts-free',
+    ingredients: 'Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks, Cardamom, Cinnamon pieces.',
+    variants: [
+      { image: '/packaging (1).png', label: '50 g bag', value: '50' },
+      { image: '/packaging (2).png', label: '100 g bag', value: '100' },
+      { image: '/packaging (3).png', label: '170 g bag', value: '170' },
+      { image: '/packaging (4).png', label: '250 g bag', value: '250' },
+      { image: '/packaging (5).png', label: '1 kg g bag', value: '1kg' },
+      { image: '/packaging (6).png', label: 'Sampler', value: 'sampler' },
+    ]
+  },
+];
+
+// Helper function to get product by slug
+export const getProductBySlug = (slug) => {
+  return productsData.find(product => product.slug === slug);
+};
+
+// Helper function to get all products
+export const getAllProducts = () => {
+  return productsData;
+};
