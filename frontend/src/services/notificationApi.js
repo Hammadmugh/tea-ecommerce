@@ -1,4 +1,4 @@
-import { API_BASE_URL } from './api';
+import { API_BASE_URL } from "./api";
 
 export const notificationApi = {
   // Fetch user's notifications
