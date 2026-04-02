@@ -6,7 +6,7 @@ import axios from 'axios';
  * Handles all review-related HTTP requests with JWT auth
  */
 
-const NESTJS_API_URL = 'http://localhost:5001/api/reviews';
+const NESTJS_API_URL = 'https://tea-ecommerce.onrender.com/api/reviews';
 
 // Create axios instance with automatic JWT injection
 const createReviewAPI = () => {

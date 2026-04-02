@@ -27,7 +27,7 @@ export const initializeSocket = () => {
   } else {
     console.log('🔧 Initializing Socket.IO connection...');
   }
-  socket = io('http://localhost:5001', {
+  socket = io('https://tea-ecommerce.onrender.com', {
     auth: {
       token: token || '',
     },
