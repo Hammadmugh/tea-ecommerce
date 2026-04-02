@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
+import { NotificationProvider } from './context/NotificationContext'
 import Navbar from './components/Navbar'
 import AdminProtectedRoute from './components/AdminProtectedRoute'
 import LandingPage from './pages/LandingPage'
@@ -18,8 +19,9 @@ import InventoryManagement from './pages/admin/InventoryManagement'
 
 const App = () => {
   return (
-    <CartProvider>
-      <Router>
+    <NotificationProvider>
+      <CartProvider>
+        <Router>
         <Routes>
           {/* Login Route */}
           <Route path="/login" element={<LoginPage />} />
@@ -66,7 +68,8 @@ const App = () => {
           />
         </Routes>
       </Router>
-    </CartProvider>
+      </CartProvider>
+    </NotificationProvider>
   )
 }
 export default App

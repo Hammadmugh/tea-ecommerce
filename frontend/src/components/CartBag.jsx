@@ -2,48 +2,18 @@ import React from 'react';
 import { X, Plus, Minus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { getAdjustedPrice } from '../utils/priceCalculator';
 
 export default function CartBag({ isOpen, onClose }) {
   const navigate = useNavigate();
   const { items, removeFromCart, updateQuantity } = useCart();
 
-  // Calculate price based on variant weight (same as CheckoutPage)
-  const getAdjustedPrice = (item) => {
-    // If no variant, return base price
-    if (!item.variant) return item.price;
-    
-    // Extract variant value and convert to string
-    const variantStr = String(item.variant.value || '').trim();
-    
-    // Calculate multiplier based on weight
-    let multiplier = 1;
-    switch(variantStr) {
-      case '50':
-        multiplier = 1;
-        break;
-      case '100':
-        multiplier = 2;
-        break;
-      case '170':
-        multiplier = 170 / 50; // 3.4
-        break;
-      case '250':
-        multiplier = 250 / 50; // 5
-        break;
-      case '1kg':
-        multiplier = 1000 / 50; // 20
-        break;
-      case 'sampler':
-        multiplier = 0.6;
-        break;
-      default:
-        multiplier = 1;
-    }
-    
-    return item.price * multiplier;
+  // Calculate price based on variant weight
+  const calculateItemPrice = (item) => {
+    return getAdjustedPrice(item.price, item.variant?.value);
   };
 
-  const subtotal = items.reduce((sum, item) => sum + (getAdjustedPrice(item) * item.quantity), 0);
+  const subtotal = items.reduce((sum, item) => sum + (calculateItemPrice(item) * item.quantity), 0);
   const delivery = items.length > 0 ? 3.95 : 0;
   const total = subtotal + delivery;
 
@@ -139,7 +109,7 @@ export default function CartBag({ isOpen, onClose }) {
 
                     {/* Price */}
                     <span className="font-montserrat font-medium text-base text-gray-950">
-                      €{(getAdjustedPrice(item) * item.quantity).toFixed(2)}
+                      €{(calculateItemPrice(item) * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 </div>

@@ -1,9 +1,18 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
+import { isTokenBlacklisted } from "../controllers/authController.js";
 
 export const verifyToken = (req, res, next) => {
   let token;
   let authHeader = req.headers.authorization;
+
+  // Check format FIRST before extracting token
+  if (authHeader && !authHeader.startsWith("Bearer ")) {
+    return res.status(400).json({ 
+      success: false,
+      message: "Invalid token format. Use 'Bearer <token>'" 
+    });
+  }
 
   if (authHeader && authHeader.startsWith("Bearer ")) {
     token = authHeader.slice(7);
@@ -16,14 +25,15 @@ export const verifyToken = (req, res, next) => {
     });
   }
 
-  if (authHeader && !authHeader.startsWith("Bearer ")) {
-    return res.status(400).json({ 
-      success: false,
-      message: "Invalid token format. Use 'Bearer <token>'" 
-    });
-  }
-
   try {
+    // Check if token is blacklisted (logged out)
+    if (isTokenBlacklisted(token)) {
+      return res.status(401).json({ 
+        success: false,
+        message: "Token has been invalidated. Please log in again." 
+      });
+    }
+    
     const decode = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decode;
     next();

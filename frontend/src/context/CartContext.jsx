@@ -39,12 +39,14 @@ const cartReducer = (state, action) => {
       };
     }
 
-    case 'REMOVE_FROM_CART':
+    case 'REMOVE_FROM_CART': {
+      const itemToRemove = state.items.find((item) => item.id === action.payload);
       return {
         ...state,
         items: state.items.filter((item) => item.id !== action.payload),
-        totalItems: state.totalItems - (state.items.find((item) => item.id === action.payload)?.quantity || 0),
+        totalItems: state.totalItems - (itemToRemove?.quantity || 0),
       };
+    }
 
     case 'UPDATE_QUANTITY': {
       const item = state.items.find((i) => i.id === action.payload.id);

@@ -4,11 +4,23 @@ import Cart from "../models/cartModel.js";
 import Variant from "../models/varientModel.js";
 import Product from "../models/productModel.js";
 
-// Generate unique order ID
+// Validate cart item has required fields
+const validateCartItem = (item) => {
+  const required = ['productId', 'productName', 'pricePerUnit', 'quantity'];
+  for (const field of required) {
+    if (!(field in item) || item[field] === undefined || item[field] === null) {
+      return false;
+    }
+  }
+  return item.quantity >= 1 && item.pricePerUnit > 0;
+};
+
+// Generate unique order ID using timestamp and random hash
 const generateOrderId = () => {
-  const timestamp = Date.now().toString().slice(-6);
-  const random = Math.floor(Math.random() * 10000);
-  return `ORD-${new Date().toISOString().split("T")[0].replace(/-/g, "")}-${timestamp}${random}`;
+  const dateStr = new Date().toISOString().split("T")[0].replace(/-/g, "");
+  const timestamp = Date.now().toString(36); // Base36 conversion for shorter string
+  const random = Math.random().toString(36).substring(2, 9); // Random alphanumeric
+  return `ORD-${dateStr}-${timestamp}${random}`.toUpperCase();
 };
 
 // @route POST /api/orders/place
@@ -40,6 +52,14 @@ export const placeOrder = async (req, res) => {
       console.log('✅ Using cart items from frontend:', cartItems.length, 'items');
       
       for (const cartItem of cartItems) {
+        // Validate cart item format
+        if (!validateCartItem(cartItem)) {
+          await session.abortTransaction();
+          return res.status(400).json({
+            success: false,
+            message: "Invalid cart item format. Required fields: productId, productName, pricePerUnit, quantity"
+          });
+        }
         console.log('📦 Processing item:', {
           name: cartItem.productName,
           id: cartItem.productId,

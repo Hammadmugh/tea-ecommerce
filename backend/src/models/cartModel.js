@@ -68,8 +68,22 @@ cartSchema.index({ user: 1 });
 
 // Pre-save hook to calculate totals
 cartSchema.pre("save", function (next) {
-  this.totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
-  this.totalPrice = this.items.reduce((sum, item) => sum + item.priceAtAddTime * item.quantity, 0);
+  this.totalItems = this.items.reduce((sum, item) => sum + (item.quantity || 0), 0);
+  
+  // Validate and calculate totalPrice safely
+  this.totalPrice = this.items.reduce((sum, item) => {
+    const price = Number(item.priceAtAddTime) || 0;
+    const qty = Number(item.quantity) || 0;
+    
+    // Ensure valid numbers
+    if (!isFinite(price) || !isFinite(qty)) {
+      console.warn('⚠️ Invalid price or quantity detected:', { price, qty, item });
+      return sum;
+    }
+    
+    return sum + (price * qty);
+  }, 0);
+  
   this.lastUpdated = new Date();
   next();
 });

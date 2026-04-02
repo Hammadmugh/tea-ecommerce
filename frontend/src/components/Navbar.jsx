@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CartBag from './CartBag';
 import UserProfile from './UserProfile';
+import NotificationBell from './NotificationBell';
 import { useCart } from '../context/CartContext';
 import { LogIn, Settings, User } from 'lucide-react';
 
@@ -134,6 +135,9 @@ export default function Navbar() {
                   Logout
                 </button>
               )}
+
+              {/* Notification Bell */}
+              {user.email && <NotificationBell />}
 
               {/* Cart Icon */}
               <button 

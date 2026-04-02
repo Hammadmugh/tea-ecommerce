@@ -75,7 +75,7 @@ export const addToCart = async (req, res) => {
     }
 
     // Validate variant belongs to product
-    if (variant.product.toString() !== productId) {
+    if (variant.product.toString() !== String(productId)) {
       return res.status(400).json({ 
         success: false, 
         message: "Variant does not belong to this product" 

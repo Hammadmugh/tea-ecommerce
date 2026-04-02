@@ -47,6 +47,7 @@ export const getAnalytics = async (req, res) => {
     // Get top selling products
     const topProducts = await Order.aggregate([
       { $unwind: "$items" },
+      { $match: { "items.product": { $ne: null } } },
       {
         $group: {
           _id: "$items.product",
@@ -81,9 +82,13 @@ export const getAnalytics = async (req, res) => {
       }
     ]);
 
-    // Get low stock products
+    // Get low stock products (with pagination)
+    const lowStockPage = parseInt(req.query.lowStockPage) || 1;
+    const lowStockSkip = (lowStockPage - 1) * 10;
+    
     const lowStockProducts = await Variant.find({ stock: { $lt: 10 } })
       .populate("product", "name slug")
+      .skip(lowStockSkip)
       .limit(10);
 
     res.status(200).json({

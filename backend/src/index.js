@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import { validateEnvironment } from "./config/validateEnv.js";
 import { seedAdmin } from "./config/seedAdmin.js";
 import { seedProducts } from "./config/seedProducts.js";
 
@@ -15,6 +16,9 @@ import adminRoutes from "./routes/adminRoutes.js";
 
 // Load environment variables
 dotenv.config();
+
+// Validate environment variables
+validateEnvironment();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -54,31 +58,6 @@ app.get("/api/health", (req, res) => {
     message: "Server is running",
     timestamp: new Date().toISOString()
   });
-});
-
-// ============ DEBUG ENDPOINT ============
-app.get("/api/debug/admin-user", async (req, res) => {
-  try {
-    const User = require("./models/userModel.js").default;
-    const adminUser = await User.findOne({ role: "superadmin" });
-    res.status(200).json({
-      success: true,
-      message: "Admin user check",
-      adminExists: !!adminUser,
-      adminData: adminUser ? {
-        id: adminUser._id,
-        name: adminUser.name,
-        email: adminUser.email,
-        role: adminUser.role,
-        isBlocked: adminUser.isBlocked
-      } : null
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-  }
 });
 
 // ============ 404 HANDLER ============

@@ -1,6 +1,11 @@
 import Product from "../models/productModel.js";
 import Variant from "../models/varientModel.js";
 
+// Escape regex special characters to prevent injection
+const escapeRegex = (str) => {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
 // @route GET /api/products
 // @access Public
 // Query params: page, limit, category, minPrice, maxPrice, sort, rating, flavor, searchTerm
@@ -40,10 +45,11 @@ export const getProducts = async (req, res) => {
     }
 
     if (searchTerm) {
+      const escaped = escapeRegex(searchTerm);
       filter.$or = [
-        { name: { $regex: searchTerm, $options: "i" } },
-        { description: { $regex: searchTerm, $options: "i" } },
-        { ingredients: { $regex: searchTerm, $options: "i" } }
+        { name: { $regex: escaped, $options: "i" } },
+        { description: { $regex: escaped, $options: "i" } },
+        { ingredients: { $regex: escaped, $options: "i" } }
       ];
     }
 

@@ -3,6 +3,9 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from "validator";
 
+// Token blacklist (in production, use Redis)
+const tokenBlacklist = new Set();
+
 // Helper function to generate JWT token
 const generateToken = (user) => {
   if (!process.env.JWT_SECRET) {
@@ -18,6 +21,11 @@ const generateToken = (user) => {
     process.env.JWT_SECRET,
     { expiresIn: "7d" }
   );
+};
+
+// Check if token is blacklisted
+export const isTokenBlacklisted = (token) => {
+  return tokenBlacklist.has(token);
 };
 
 // @route POST /api/auth/signup
@@ -204,10 +212,25 @@ export const getProfile = async (req, res) => {
 // @route POST /api/auth/logout
 // @access Private
 export const logout = (req, res) => {
-  // Token invalidation is typically handled on frontend
-  // Backend can implement token blacklist if needed
-  res.status(200).json({
-    success: true,
-    message: "Logged out successfully"
-  });
+  try {
+    // Get token from authorization header
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      const token = authHeader.slice(7);
+      // Add token to blacklist
+      tokenBlacklist.add(token);
+      console.log('🔐 Token added to blacklist on logout');
+    }
+    
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully"
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Error during logout",
+      error: err.message
+    });
+  }
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getProductBySlug, getAllProducts } from "../data/products";
 import { useCart } from "../context/CartContext";
+import ProductReviewsSection from "../components/ProductReviewsSection";
 
 const ProductDetailPage = () => {
   const { collection, productName } = useParams();
@@ -361,6 +362,8 @@ const ProductDetailPage = () => {
       </section>
 
       {/* You May Also Like Section */}
+      <ProductReviewsSection productId={product.slug} />
+
       <section className="w-full bg-white">
         <div className="flex flex-col items-center gap-10 px-4 md:px-8 py-16 md:py-20 max-w-7xl mx-auto">
           {/* Section Title */}

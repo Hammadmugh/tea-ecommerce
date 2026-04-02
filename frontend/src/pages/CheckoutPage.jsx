@@ -4,6 +4,7 @@ import { ChevronRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { createOrder } from '../services/orderApi';
 import { getAllProducts } from "../data/products";
+import { getAdjustedPrice } from '../utils/priceCalculator';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -12,6 +13,7 @@ export default function CheckoutPage() {
   const { items, clearCart } = useCart();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedPayment, setSelectedPayment] = useState('credit_card');
+  const [loggedItems, setLoggedItems] = useState(new Set());
 
   const getRecommendedProducts = () => {
     const allProducts = getAllProducts();
@@ -41,58 +43,11 @@ export default function CheckoutPage() {
   });
 
   // Calculate price based on variant weight
-  const getAdjustedPrice = (item) => {
-    // Debug: Check what we're getting
-    const hasVariant = !!item.variant;
-    const variantValue = item.variant?.value;
-    
-    // If no variant, return base price
-    if (!item.variant) {
-      return item.price;
-    }
-    
-    // Extract variant value and convert to string
-    const variantStr = String(variantValue || '').trim();
-    
-    // Calculate multiplier based on weight
-    let multiplier = 1;
-    switch(variantStr) {
-      case '50':
-        multiplier = 1;
-        break;
-      case '100':
-        multiplier = 2;
-        break;
-      case '170':
-        multiplier = 170 / 50; // 3.4
-        break;
-      case '250':
-        multiplier = 250 / 50; // 5
-        break;
-      case '1kg':
-        multiplier = 1000 / 50; // 20
-        break;
-      case 'sampler':
-        multiplier = 0.6;
-        break;
-      default:
-        multiplier = 1;
-    }
-    
-    const finalPrice = item.price * multiplier;
-    
-    // Log this only once per render to avoid spam
-    if (!window.loggedItems) window.loggedItems = new Set();
-    const itemKey = `${item.id}-${item.variant?.value}`;
-    if (!window.loggedItems.has(itemKey)) {
-      console.log(`💰 ${item.name} [${variantStr}]: ${item.price} * ${multiplier} = ${finalPrice}`);
-      window.loggedItems.add(itemKey);
-    }
-    
-    return finalPrice;
+  const calculateItemPrice = (item) => {
+    return getAdjustedPrice(item.price, item.variant?.value);
   };
 
-  const subtotal = items.reduce((sum, item) => sum + (getAdjustedPrice(item) * item.quantity), 0);
+  const subtotal = items.reduce((sum, item) => sum + (calculateItemPrice(item) * item.quantity), 0);
   const delivery = items.length > 0 ? 3.95 : 0;
   const total = subtotal + delivery;
 
@@ -127,7 +82,7 @@ export default function CheckoutPage() {
       // Create items with adjusted prices based on variants
       const adjustedItems = items.map(item => ({
         ...item,
-        price: getAdjustedPrice(item)
+        price: calculateItemPrice(item)
       }));
 
       const orderData = {
@@ -238,11 +193,11 @@ export default function CheckoutPage() {
                                 Qty: {item.quantity}
                               </span>
                               <span className="font-montserrat text-xs text-gray-500">
-                                €{getAdjustedPrice(item).toFixed(2)} each
+                                €{calculateItemPrice(item).toFixed(2)} each
                               </span>
                             </div>
                             <span className="font-montserrat font-medium text-base text-gray-950">
-                              €{(getAdjustedPrice(item) * item.quantity).toFixed(2)}
+                              €{(calculateItemPrice(item) * item.quantity).toFixed(2)}
                             </span>
                           </div>
                         </div>
@@ -363,7 +318,7 @@ export default function CheckoutPage() {
                     {items.map((item, index) => (
                       <div key={`${item.id}-${item.variant?.value || 'novariant'}-${index}`} className="flex justify-between mb-2">
                         <span className="font-montserrat text-sm text-gray-950">{item.name} x {item.quantity}</span>
-                        <span className="font-montserrat font-medium text-gray-950">€{(getAdjustedPrice(item) * item.quantity).toFixed(2)}</span>
+                        <span className="font-montserrat font-medium text-gray-950">€{(calculateItemPrice(item) * item.quantity).toFixed(2)}</span>
                       </div>
                     ))}
                   </div>
