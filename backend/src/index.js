@@ -27,7 +27,26 @@ const MONGODB_URI = process.env.CONNECTION_STRING || "mongodb://localhost:27017/
 // ============ MIDDLEWARE ============
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ limit: '10kb', extended: true }));
-app.use(cors());
+
+// Configure CORS to allow frontend origins
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://tea-ecommerce-frontend.vercel.app',
+    'https://tea-ecommerce.vercel.app',
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options('*', cors(corsOptions));
 
 // ============ DATABASE CONNECTION ============
 mongoose
